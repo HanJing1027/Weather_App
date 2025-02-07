@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,6 +15,40 @@
     <title>Weather_App</title>
   </head>
   <body>
+    <h1>Weather Dashboard</h1>
+
+    <section class="container">
+      <div class="weather-input">
+        <h3>輸入城市名字</h3>
+        <input type="text" placeholder="E.g., 台北, 紐約, 倫敦, 東京" />
+        <button class="search-btn">收尋</button>
+        <div class="separator"></div>
+        <button class="location-btn">使用當前位置</button>
+      </div>
+
+      <div class="weather-data">
+        <div class="current-weather">
+          <div class="details">
+            <h2>倫敦 <br />(2023-06-19)</h2>
+            <h4>溫度<br />19.10°C</h4>
+            <h4>風速<br />4.31 M/S</h4>
+            <h4>濕度<br />79%</h4>
+          </div>
+
+          <div class="icon">
+            <img
+              src="https:/openweathermap.org/img/wn/10d@2x.png"
+              alt="weather-icon"
+            />
+            <h4>降雨量中等</h4>
+          </div>
+        </div>
+
+        <div class="days-forecast">
+          <h2>5-Day Forecast</h2>
+        </div>
+      </div>
+    </section>
     <!-- js -->
     <script src="js/app.js"></script>
   </body>
