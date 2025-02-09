@@ -14,15 +14,15 @@ const createCurrentWeather = (currentItem, cityNameInChinese) => {
       <h4>溫度<br />${currentItem.main.temp} °C</h4>
       <h4>風速<br />${currentItem.wind.speed} M/S</h4>
       <h4>濕度<br />${currentItem.main.humidity} %</h4>
-    </div
-    <div class="icon"> 
+    </div>
+    <div class="icon">
       <img
         src="https:/openweathermap.org/img/wn/${
           currentItem.weather[0].icon
         }@2x.png"
         alt="weather-icon"
       />
-      <h4>降雨量中等</h4>
+      <h4>${currentItem.weather[0].description}</h4>
     </div>
   `;
 };
@@ -55,7 +55,6 @@ const getWeatherDetails = async (cityNameInChinese, lat, lon) => {
       throw new Error(`HTTP 錯誤！狀態碼: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data.city.name);
 
     const recordedDates = [];
     const sixDayForecast = [];
