@@ -4,7 +4,7 @@ import { cityDictionary } from "./cityMapper.js";
 const cityInput = document.querySelector(".weather-input input");
 const currentWeather = document.querySelector(".current-weather");
 const weatherCards = document.querySelector(".weather-cards");
-const weatherTips = document.querySelector(".weather-tips");
+const weatherTips = document.querySelector(".weather-tip");
 const searchBtn = document.querySelector(".search-btn");
 const locationBtn = document.querySelector(".location-btn");
 
@@ -31,7 +31,67 @@ const createCurrentWeather = (currentItem, cityNameInChinese) => {
 
 // 天氣小貼士
 const createWeatherTips = (currentItem) => {
-  //
+  let tip = "";
+  const weatherMain = currentItem.weather[0].main;
+
+  switch (weatherMain) {
+    case "Clear":
+      tip = "今天天氣晴朗，適合外出走走，但要記得防曬唷！";
+      break;
+    case "Clouds":
+      tip = "雖然沒有太陽，但天氣可能悶熱或轉變！";
+      break;
+    case "Rain":
+      tip = "小心路滑，記得帶傘！";
+      break;
+    case "Drizzle":
+      tip = "細雨綿綿，可能不太明顯，但還是帶把傘吧！";
+      break;
+    case "Thunderstorm":
+      tip = "雷聲隆隆，請盡量待在室內！";
+      break;
+    case "Snow":
+      tip = "雪花飄飄，請注意保暖！";
+      break;
+    case "Mist":
+      tip = "霧氣瀰漫，視線不清，請小心！";
+      break;
+    case "Haze":
+      tip = "空氣品質不佳，建議減少外出！";
+      break;
+    case "Smoke":
+      tip = "空氣中瀰漫煙霧，請保護呼吸道！";
+      break;
+    case "Fog":
+      tip = "濃霧瀰漫，能見度低，請注意安全！";
+      break;
+    case "Dust":
+      tip = "風沙大，請做好防護！";
+      break;
+    case "Sand":
+      tip = "沙塵滾滾，盡量待在室內！";
+      break;
+    case "Ash":
+      tip = "火山灰影響空氣品質，請注意防護！";
+      break;
+    case "Squall":
+      tip = "狂風吹襲，請遠離不穩固物品！";
+      break;
+    case "Tornado":
+      tip = "龍捲風警報，請盡速尋找掩蔽處！";
+      break;
+  }
+
+  return `
+    <div class="tip-header">
+      <img
+        src="https://openweathermap.org/img/wn/${currentItem.weather[0].icon}@2x.png"
+        alt="weather-icon"
+      />
+      <h2>天氣小貼士</h2>
+    </div>
+    <p>「${tip}」</p>
+  `;
 };
 
 // 渲染未來五天的天氣資訊
@@ -78,6 +138,7 @@ const getWeatherDetails = async (cityNameInChinese, lat, lon) => {
     cityInput.value = "";
     weatherCards.innerHTML = "";
     currentWeather.innerHTML = "";
+    weatherTips.innerHTML = "";
 
     // 取得未來五天 天氣資訊象
     let fiveDayForecast = sixDayForecast.slice(1, 6);
