@@ -21,11 +21,17 @@ body {
   display: flex;
   gap    : 35px;
   padding: 30px;
+
+  .left-panel {
+    display       : flex;
+    flex-direction: column;
+    align-items   : center; // 確保元素對齊
+    width         : 550px;
+  }
 }
 
 .weather-input {
-  width: 550px;
-
+  width: 100%;
 
   h3 {
     font-size  : 1.1rem;
@@ -83,6 +89,31 @@ body {
 
   .location-btn {
     background-color: #444;
+  }
+}
+
+.weather-tip {
+  width           : 100%;
+  margin-top      : 50px;
+  background-color: #6B739E;
+  color           : #FFF;
+  border-radius   : 8px;
+  padding         : 0 15px 20px;
+
+  .tip-header {
+    display    : flex;
+    align-items: center;
+
+    img {
+      margin-top: -5px;
+      width     : 80px;
+    }
+
+    h2 {
+      font-size  : 1.1rem;
+      font-weight: bold;
+      margin-left: 20px;
+    }
   }
 }
 
@@ -191,6 +222,7 @@ body {
 }
 
 @media screen and (max-width: 1400px) {
+
   .weather-data {
 
     .current-weather {
@@ -241,8 +273,15 @@ body {
 }
 
 @media screen and (max-width: 950px) {
+  .container {
+
+    .left-panel {
+      width: 400px;
+    }
+  }
+
   .weather-input {
-    width: 450px;
+    width: 100%;
   }
 
   .weather-data {
@@ -274,6 +313,10 @@ body {
   .container {
     flex-wrap: wrap;
     padding  : 15px;
+
+    .left-panel {
+      width: 100%;
+    }
   }
 
   .weather-input {

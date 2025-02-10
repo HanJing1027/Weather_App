@@ -162,9 +162,15 @@ body h1 {
   gap: 35px;
   padding: 30px;
 }
+.container .left-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 550px;
+}
 
 .weather-input {
-  width: 550px;
+  width: 100%;
 }
 .weather-input h3 {
   font-size: 1.1rem;
@@ -216,6 +222,28 @@ body h1 {
 }
 .weather-input .location-btn {
   background-color: #444;
+}
+
+.weather-tip {
+  width: 100%;
+  margin-top: 50px;
+  background-color: #6B739E;
+  color: #FFF;
+  border-radius: 8px;
+  padding: 0 15px 20px;
+}
+.weather-tip .tip-header {
+  display: flex;
+  align-items: center;
+}
+.weather-tip .tip-header img {
+  margin-top: -5px;
+  width: 80px;
+}
+.weather-tip .tip-header h2 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-left: 20px;
 }
 
 .weather-data {
@@ -331,8 +359,11 @@ body h1 {
   }
 }
 @media screen and (max-width: 950px) {
+  .container .left-panel {
+    width: 400px;
+  }
   .weather-input {
-    width: 450px;
+    width: 100%;
   }
   .weather-data .current-weather {
     padding: 10px;
@@ -351,6 +382,9 @@ body h1 {
   .container {
     flex-wrap: wrap;
     padding: 15px;
+  }
+  .container .left-panel {
+    width: 100%;
   }
   .weather-input {
     width: 100%;
