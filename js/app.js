@@ -4,7 +4,9 @@ import { cityDictionary } from "./cityMapper.js";
 const cityInput = document.querySelector(".weather-input input");
 const currentWeather = document.querySelector(".current-weather");
 const weatherCards = document.querySelector(".weather-cards");
+const weatherTips = document.querySelector(".weather-tips");
 const searchBtn = document.querySelector(".search-btn");
+const locationBtn = document.querySelector(".location-btn");
 
 // 渲染當前的天氣資訊
 const createCurrentWeather = (currentItem, cityNameInChinese) => {
@@ -25,6 +27,11 @@ const createCurrentWeather = (currentItem, cityNameInChinese) => {
       <h4>${currentItem.weather[0].description}</h4>
     </div>
   `;
+};
+
+// 天氣小貼士
+const createWeatherTips = (currentItem) => {
+  //
 };
 
 // 渲染未來五天的天氣資訊
@@ -84,11 +91,17 @@ const getWeatherDetails = async (cityNameInChinese, lat, lon) => {
 
     // 取得當天天氣資訊
     let todayForecast = sixDayForecast.slice(0, 1);
+    console.log(todayForecast);
     // 渲染當天天氣資訊至畫面
     todayForecast.forEach((currentItem) => {
       currentWeather.insertAdjacentHTML(
         "beforeend",
         createCurrentWeather(currentItem, cityNameInChinese)
+      );
+
+      weatherTips.insertAdjacentHTML(
+        "beforeend",
+        createWeatherTips(currentItem)
       );
     });
   } catch (err) {
@@ -117,15 +130,16 @@ const getCityCordinates = async () => {
 
   try {
     const response = await fetch(GEOCODING_API_URL);
+
+    if (!response.ok) {
+      throw new Error(`HTTP 錯誤！狀態碼: ${response.status}`);
+    }
+
     const data = await response.json();
 
     const apiCityName = data.name;
 
     const cityNameInChinese = reverseCityDictionar[apiCityName] || apiCityName;
-
-    if (!response.ok) {
-      throw new Error(`HTTP 錯誤！狀態碼: ${response.status}`);
-    }
 
     // 取得緯度
     const lat = data.coord.lat;
@@ -138,4 +152,42 @@ const getCityCordinates = async () => {
   }
 };
 
+// 取得使用者當前經緯度的天氣資訊
+const getWeatherByLocation = async () => {
+  // 使用瀏覽器Geolocation API來取得使用者的經緯度
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      // 取得當前經緯度
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
+
+      // 使用定位的經緯度進行反向地理編碼，獲取城市名稱
+      const REVERSE_GEOCODING_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${OPENWEATHER_API_KEY}&lang=zh_tw`;
+
+      try {
+        const response = await fetch(REVERSE_GEOCODING_URL);
+
+        if (!response.ok) {
+          throw new Error(`反向地理編碼錯誤！狀態碼: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // 獲取城市名字
+        const apiCityName = data[0].name;
+        const cityNameInChinese = reverseCityDictionar[apiCityName];
+
+        getWeatherDetails(cityNameInChinese, lat, lon);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    (error) => {
+      console.error(`獲取位置失敗 ${error}`);
+    }
+  );
+};
+
 searchBtn.addEventListener("click", getCityCordinates);
+locationBtn.addEventListener("click", getWeatherByLocation);
+getWeatherByLocation();
