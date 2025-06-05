@@ -19,15 +19,21 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Create config file
+      - name: Update config file with secret
         run: |
-          mkdir -p js
-          echo "export const config = {" > [config.js](http://_vscodecontentref_/3)
-          echo "  OPENWEATHER_API_KEY: \"${{ secrets.OPENWEATHER_API_KEY }}\"" >> [config.js](http://_vscodecontentref_/4)
-          echo "};" >> [config.js](http://_vscodecontentref_/5)
-          echo "Config file created:"
-          ls -la js/
-          cat [config.js](http://_vscodecontentref_/6)
+          # 檢查 config.js 是否存在
+          if [ -f "js/config.js" ]; then
+            # 替換 API Key
+            sed -i "s/OPENWEATHER_API_KEY: \`.*\`/OPENWEATHER_API_KEY: \`${{ secrets.OPENWEATHER_API_KEY }}\`/g" js/config.js
+          else
+            # 如果不存在就創建
+            mkdir -p js
+            echo "export const config = {" > js/config.js
+            echo "  OPENWEATHER_API_KEY: \`${{ secrets.OPENWEATHER_API_KEY }}\`" >> js/config.js
+            echo "};" >> js/config.js
+          fi
+          echo "Config file updated:"
+          cat js/config.js
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
