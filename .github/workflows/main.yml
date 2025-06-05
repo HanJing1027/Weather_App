@@ -3,41 +3,24 @@ name: Deploy Weather App
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Update config file with secret
+      - name: Replace API key
         run: |
-          # 檢查 config.js 是否存在
-          if [ -f "js/config.js" ]; then
-            # 替換 API Key
-            sed -i "s/OPENWEATHER_API_KEY: \`.*\`/OPENWEATHER_API_KEY: \`${{ secrets.OPENWEATHER_API_KEY }}\`/g" js/config.js
-          else
-            # 如果不存在就創建
-            mkdir -p js
-            echo "export const config = {" > js/config.js
-            echo "  OPENWEATHER_API_KEY: \`${{ secrets.OPENWEATHER_API_KEY }}\`" >> js/config.js
-            echo "};" >> js/config.js
-          fi
-          echo "Config file updated:"
+          sed -i "s/OPENWEATHER_API_KEY: \`.*\`/OPENWEATHER_API_KEY: \`${{ secrets.OPENWEATHER_API_KEY }}\`/g" js/config.js
+          echo "Updated config.js:"
           cat js/config.js
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
