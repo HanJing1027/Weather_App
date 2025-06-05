@@ -13,7 +13,6 @@ jobs:
       contents: read
       pages: write
       id-token: write
-      actions: write
 
     steps:
       - name: Checkout
@@ -30,4 +29,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
-          force_orphan: true
