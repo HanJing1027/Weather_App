@@ -1,23 +1,29 @@
-name: Deploy Weather App
+name: Deploy to GitHub Pages
 
 on:
   push:
+    branches: [master]
+  pull_request:
     branches: [master]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Replace API key
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Create config file
         run: |
-          sed -i "s/OPENWEATHER_API_KEY: \`.*\`/OPENWEATHER_API_KEY: \`${{ secrets.OPENWEATHER_API_KEY }}\`/g" js/config.js
-          echo "Updated config.js:"
-          cat js/config.js
+          echo "export const config = {" > js/config.js
+          echo "  OPENWEATHER_API_KEY: '${{ secrets.OPENWEATHER_API_KEY }}'," >> js/config.js
+          echo "};" >> js/config.js
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
