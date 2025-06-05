@@ -22,10 +22,12 @@ jobs:
       - name: Create config file
         run: |
           mkdir -p js
-          echo "export const OPENWEATHER_API_KEY = \"${{ secrets.OPENWEATHER_API_KEY }}\";" > js/config.js
+          echo "export const config = {" > [config.js](http://_vscodecontentref_/3)
+          echo "  OPENWEATHER_API_KEY: \"${{ secrets.OPENWEATHER_API_KEY }}\"" >> [config.js](http://_vscodecontentref_/4)
+          echo "};" >> [config.js](http://_vscodecontentref_/5)
           echo "Config file created:"
           ls -la js/
-          cat js/config.js
+          cat [config.js](http://_vscodecontentref_/6)
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

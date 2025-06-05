@@ -1,4 +1,4 @@
-import { OPENWEATHER_API_KEY } from "./config.js";
+import { config } from "./config.js";
 import { cityDictionary } from "./cityMapper.js";
 
 const cityInput = document.querySelector(".weather-input input");
@@ -114,7 +114,7 @@ const createWeatherCard = (weatherItem) => {
 
 // 取得天氣資訊
 const getWeatherDetails = async (cityNameInChinese, lat, lon) => {
-  const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&lang=zh_tw&units=metric`;
+  const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${config.OPENWEATHER_API_KEY}&lang=zh_tw&units=metric`;
 
   try {
     const response = await fetch(WEATHER_API_URL);
@@ -187,7 +187,7 @@ const getCityCordinates = async () => {
   // 根據字典查找對應的英文名字
   let cityNameInEnglish = cityDictionary[userInputCity] || userInputCity;
 
-  const GEOCODING_API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${cityNameInEnglish}&appid=${OPENWEATHER_API_KEY}&lang=zh_tw`;
+  const GEOCODING_API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${cityNameInEnglish}&appid=${config.OPENWEATHER_API_KEY}&lang=zh_tw`;
 
   try {
     const response = await fetch(GEOCODING_API_URL);
@@ -223,7 +223,7 @@ const getWeatherByLocation = async () => {
       let lon = position.coords.longitude;
 
       // 使用定位的經緯度進行反向地理編碼，獲取城市名稱
-      const REVERSE_GEOCODING_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${OPENWEATHER_API_KEY}&lang=zh_tw`;
+      const REVERSE_GEOCODING_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${config.OPENWEATHER_API_KEY}&lang=zh_tw`;
 
       try {
         const response = await fetch(REVERSE_GEOCODING_URL);
