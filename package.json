@@ -1,13 +1,2 @@
 {
-    "name": "weather-app",
-    "version": "1.0.0",
-    "scripts": 
-    {
-        "build": "sass style/style.scss style/style.css",
-        "watch": "sass --watch style/style.scss style/style.css"
-    },
-    "devDependencies": 
-    {
-        "sass": "^1.69.0"
-    }
 }

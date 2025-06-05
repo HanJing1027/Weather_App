@@ -3,8 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
 
 jobs:
   deploy:
@@ -13,17 +11,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build SCSS
-        run: npm run build
 
       - name: Create config file
         run: |
