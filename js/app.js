@@ -19,9 +19,10 @@ const createCurrentWeather = (currentItem, cityNameInChinese) => {
     </div>
     <div class="icon">
       <img
-        src="https:/openweathermap.org/img/wn/${
+        src="https://openweathermap.org/img/wn/${
           currentItem.weather[0].icon
-        }@2x.png"
+        }@2x.png
+        
         alt="weather-icon"
       />
       <h4>${currentItem.weather[0].description}</h4>
@@ -100,7 +101,7 @@ const createWeatherCard = (weatherItem) => {
     <li class="card">
       <h2>( ${weatherItem.dt_txt.split(" ")[0]} )</h2>
       <img
-        src="https:/openweathermap.org/img/wn/${
+        src="https://openweathermap.org/img/wn/${
           weatherItem.weather[0].icon
         }@2x.png"
         alt="weather-icon"
